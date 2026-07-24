@@ -1,7 +1,18 @@
 aid: brandai
 name: Brand.ai
-description: Brand.ai is a company surfaced as a portfolio company of uncork-capital and added to the
-  API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Brand.ai (Access to Tools Inc.) is a San Francisco-based AI platform for brand
+  management that converts a company's brand assets into machine-readable
+  intelligence so that people and AI agents can maintain brand consistency across
+  tools and workflows. The product has two parts: Brand OS, which structures brand
+  data through a Brand Foundation, Brand Ontology, Daily Signals and connected
+  applications; and Brand Studio, which provides asset creation, a visual strategy
+  Canvas, project management and Brand Check validation. Founded in 2024 and backed
+  by Uncork Capital, the company targets brand builders, agencies and enterprise
+  teams. Brand.ai is not a public developer API provider — it is a demo-gated SaaS
+  platform with a published security posture (SOC 2 Type II, GDPR, CCPA), a Vanta
+  trust center and a public status page, but no public API, SDK or developer portal
+  at this time.
 url: https://raw.githubusercontent.com/api-evangelist/brandai/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -9,14 +20,67 @@ x-backed-by:
 - uncork-capital
 x-tier: stub
 x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
 tags:
 - Company
+- Brand Management
+- Artificial Intelligence
+- Marketing
+- SaaS
+- Brand Operating System
+- AI Agents
+- Design
+image: https://cdn.sanity.io/images/3zwn2ers/fullsite/1e9606e67a676cbdfd3d4d66f10f4184e9bf7c8f-1800x942.png?w=1200&auto=format
 apis: []
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+common:
+- type: Website
+  url: https://brand.ai
+- type: Blog
+  url: https://brand.ai/blog/
+- type: StatusPage
+  url: https://status.brand.ai/
+- type: PrivacyPolicy
+  url: https://brand.ai/legal/privacy/
+- type: TermsOfService
+  url: https://brand.ai/legal/terms/
+- type: Security
+  url: https://brand.ai/security/
+- type: TrustCenter
+  url: https://trust.brand.ai/
+- type: Compliance
+  url: https://brand.ai/security/
+- type: TrustCenter
+  name: Trust Center artifact
+  url: security/brandai-trust-center.yml
+- type: Lifecycle
+  url: lifecycle/brandai-lifecycle.yml
+- type: StatusPage
+  name: Status page artifact
+  url: lifecycle/brandai-lifecycle.yml
+- type: DomainSecurity
+  url: security/brandai-domain-security.yml
+- type: LLMsTxt
+  url: llms/brandai-llms.txt
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

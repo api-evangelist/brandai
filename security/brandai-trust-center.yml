@@ -1,0 +1,30 @@
+generated: '2026-07-18'
+method: searched
+probe: true
+source: https://brand.ai/security/
+trust_center: https://trust.brand.ai/
+trust_center_platform: Vanta
+security_page: https://brand.ai/security/
+certifications:
+- SOC 2 Type II
+- GDPR
+- CCPA
+controls:
+- Encryption in transit (TLS 1.3) and at rest (AES-256)
+- Semi-annual penetration testing (assume-breach methodology)
+- Zero trust access controls
+- Multi-region hosting (EU / US)
+- SSO integration
+- Audit logging and role-based access controls
+- BYOK (bring your own key) encryption option
+- No AI training on customer data
+evidence:
+- source: https://brand.ai/security/
+  keywords:
+  - soc 2 type ii
+  - gdpr
+  - ccpa
+- source: https://trust.brand.ai/
+  keywords:
+  - vanta trust center
+  - trust security compliance

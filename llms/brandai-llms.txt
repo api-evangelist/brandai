@@ -1,0 +1,25 @@
+# Brand.ai
+
+> Brand.ai (Access to Tools Inc.) is a San Francisco AI platform for brand management that turns brand assets into machine-readable intelligence, so people and AI agents can keep brand consistency across tools and workflows. Founded 2024, backed by Uncork Capital. It is a demo-gated SaaS product — no public API, SDK, or developer portal at this time.
+
+## Products
+- [Brand OS](https://brand.ai/brand-os/): Structures brand data (Brand Foundation, Brand Ontology, Daily Signals, connected apps) into machine-readable format.
+- [Brand Studio](https://brand.ai/brand-studio/): Asset creation, visual strategy Canvas, project management, and Brand Check validation.
+
+## Company
+- [Homepage](https://brand.ai)
+- [Blog](https://brand.ai/blog/)
+- [Book a demo](https://brand.ai/book-a-demo/)
+- [Status page](https://status.brand.ai/)
+
+## Security & Trust
+- [Security](https://brand.ai/security/): SOC 2 Type II, GDPR, CCPA; TLS 1.3 in transit, AES-256 at rest; no AI training on customer data.
+- [Trust Center](https://trust.brand.ai/): Vanta-hosted trust portal.
+
+## Legal
+- [Privacy Policy](https://brand.ai/legal/privacy/)
+- [Terms](https://brand.ai/legal/terms/)
+- [Acceptable Use Policy](https://brand.ai/legal/acceptable-use-policy/)
+
+## API Evangelist profile
+- [apis.yml](https://raw.githubusercontent.com/api-evangelist/brandai/refs/heads/main/apis.yml)

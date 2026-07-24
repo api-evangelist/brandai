@@ -1,0 +1,19 @@
+generated: '2026-07-18'
+method: searched
+source: https://status.brand.ai/
+status_page: https://status.brand.ai/
+status_page_platform: openstatus.dev
+status_page_json: true
+components:
+- name: App
+- name: Website
+notes: >-
+  Brand.ai publishes a public status page (openstatus.dev) monitoring the App and
+  Website components, with machine-readable JSON endpoints. No public versioning
+  policy, deprecation policy, RFC 8594 Sunset/Deprecation header support, or SLA
+  document was found — Brand.ai is a demo-gated SaaS platform without a public API,
+  so there are no versioned API operations or deprecated operations to record.
+versioning: null
+deprecation: null
+sla: null
+deprecated_operations: []
