@@ -1,0 +1,47 @@
+generated: '2026-08-13'
+method: probed
+source: live responses from app.brand.ai
+limit_count: 0
+rate_limits: []
+note: >-
+  Brand.ai documents no rate limits — it publishes no developer documentation at all
+  (no docs.brand.ai, no developers.brand.ai, no developer page in the sitemap). Nor
+  does it SIGNAL any at runtime: the full response headers of the MCP endpoint's 401
+  challenge were captured and contain no X-RateLimit-*, no RateLimit-* (RFC 9331 draft),
+  and no Retry-After. An agent driving the Brand.ai MCP server therefore has no way to
+  learn its budget except by being throttled. A zero here is a measured absence, not an
+  unchecked field.
+response_headers:
+  observed: []
+  ratelimit_family: none
+  retry_after: false
+  exhaustion_status: unknown
+headers_present_on_401:
+- date
+- content-type
+- cache-control
+- content-security-policy
+- content-security-policy-report-only
+- referrer-policy
+- report-to
+- server
+- strict-transport-security
+- www-authenticate
+- x-clerk-auth-reason
+- x-clerk-auth-status
+- x-content-type-options
+- x-matched-path
+- x-vercel-cache
+- x-vercel-id
+- cf-cache-status
+- cf-ray
+- alt-svc
+caveat: >-
+  Only unauthenticated responses could be observed. Brand.ai may emit rate-limit
+  headers on authenticated MCP traffic; that cannot be established without a token
+  and is not asserted either way.
+x-evidence:
+- url: https://app.brand.ai/api/mcp
+  status: 401
+  fetched: '2026-08-13'
+  note: full header dump inspected; no rate-limit family present

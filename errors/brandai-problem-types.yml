@@ -1,0 +1,61 @@
+generated: '2026-08-13'
+method: probed
+source: live unauthenticated requests to app.brand.ai
+format: custom
+format_note: >-
+  NOT RFC 9457. Brand.ai returns a bare JSON envelope with content-type
+  application/json (never application/problem+json), and there is no `type` URI,
+  no `title`, no `status` member and no error reference page to link to. Two
+  distinct envelope shapes were observed on the same host, which is itself a
+  finding: the generic app routes return {"error": "<string>"} while the MCP route
+  returns {"error": "<ExceptionClassName>", "message": "<human string>"} — the
+  `error` member carries a server-side exception class name, not a stable machine
+  code.
+envelope:
+  content_type: application/json
+  members:
+  - name: error
+    type: string
+    note: Either a short human phrase ("Unauthorized") or a server exception class
+      name ("McpSessionTokenMissingException") depending on the route.
+  - name: message
+    type: string
+    required: false
+    note: Present on the MCP route only.
+  problem_json: false
+  status_member: false
+  type_uri: false
+problems:
+- status: 401
+  error: Unauthorized
+  observed_at: https://app.brand.ai/api/openapi.json
+  envelope: '{"error":"Unauthorized"}'
+  remediation: Authenticate. Every /api/* route on the application host is behind
+    Clerk session auth.
+- status: 401
+  error: Unauthorized
+  observed_at: https://app.brand.ai/api-docs
+  envelope: '{"error":"Unauthorized"}'
+- status: 401
+  error: Unauthorized
+  observed_at: https://app.brand.ai/api/docs
+  envelope: '{"error":"Unauthorized"}'
+- status: 401
+  error: McpSessionTokenMissingException
+  message: MCP session token is required
+  observed_at: https://app.brand.ai/api/mcp
+  envelope: '{"error":"McpSessionTokenMissingException","message":"MCP session token
+    is required"}'
+  www_authenticate: Bearer realm="brand-ai-mcp"
+  remediation: >-
+    Obtain an access token from https://app.brand.ai/api/auth via authorization_code
+    + PKCE (S256), registering the client at the open DCR endpoint, and present it
+    as a Bearer token.
+gaps:
+- No public error reference page exists — Brand.ai publishes no developer docs.
+- No stable machine-readable error code vocabulary; `error` leaks an implementation
+  exception class name on the MCP route, which is not a contract a client can rely on.
+- No RFC 9457 problem+json, so agents get no `type` URI to branch on.
+x-evidence:
+  fetched: '2026-08-13'
+  requests: 4

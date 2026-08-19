@@ -1,0 +1,91 @@
+generated: '2026-08-13'
+method: probed
+source: >-
+  https://app.brand.ai/.well-known/oauth-authorization-server,
+  https://app.brand.ai/.well-known/openid-configuration,
+  https://app.brand.ai/api/mcp, https://brand.ai/security/
+note: >-
+  Asserted from live discovery documents and observed protocol behaviour, not from
+  provider compliance claims about standards (Brand.ai makes no standards claims in
+  public — its only published posture statements are the SOC 2 Type II / GDPR / CCPA
+  claims on brand.ai/security and its Vanta trust center).
+standards:
+- id: oauth2
+  spec: RFC 6749
+  conforms: true
+  evidence: authorization_code + refresh_token grants published at https://app.brand.ai/api/auth
+- id: oauth2-authorization-server-metadata
+  spec: RFC 8414
+  conforms: true
+  evidence: /.well-known/oauth-authorization-server returns 200 with issuer, authorization_endpoint,
+    token_endpoint, jwks_uri
+- id: oauth2-protected-resource-metadata
+  spec: RFC 9728
+  conforms: false
+  evidence: 404 at /.well-known/oauth-protected-resource and at the resource-specific
+    /.well-known/oauth-protected-resource/api/mcp; the MCP 401 WWW-Authenticate header
+    carries no resource_metadata parameter
+- id: oauth2-pkce
+  spec: RFC 7636
+  conforms: true
+  evidence: code_challenge_methods_supported = [S256]
+- id: oauth2-dynamic-client-registration
+  spec: RFC 7591
+  conforms: true
+  evidence: registration_endpoint https://app.brand.ai/api/auth/oauth2/register
+- id: oauth2-token-introspection
+  spec: RFC 7662
+  conforms: true
+  evidence: introspection_endpoint published with client_secret_basic/post auth
+- id: oauth2-token-revocation
+  spec: RFC 7009
+  conforms: true
+  evidence: revocation_endpoint published
+- id: oauth2-iss-parameter
+  spec: RFC 9207
+  conforms: true
+  evidence: authorization_response_iss_parameter_supported = true
+- id: oidc-discovery
+  spec: OpenID Connect Discovery 1.0
+  conforms: true
+  evidence: /.well-known/openid-configuration 200 with userinfo_endpoint, id_token_signing_alg_values_supported
+- id: oidc-rp-initiated-logout
+  spec: OpenID Connect RP-Initiated Logout 1.0
+  conforms: true
+  evidence: end_session_endpoint published
+- id: mcp
+  spec: Model Context Protocol (Streamable HTTP)
+  conforms: true
+  evidence: https://app.brand.ai/api/mcp answers JSON-RPC with a protocol-specific
+    401 (McpSessionTokenMissingException) and Bearer realm="brand-ai-mcp"
+- id: rfc9457-problem-details
+  spec: RFC 9457
+  conforms: false
+  evidence: error bodies are a bare {"error":...,"message":...} envelope served as
+    application/json, not application/problem+json
+- id: rfc9116-security-txt
+  spec: RFC 9116
+  conforms: false
+  evidence: /.well-known/security.txt 404 on both brand.ai and app.brand.ai
+- id: a2a
+  spec: A2A 1.0.0
+  conforms: false
+  evidence: /.well-known/agent-card.json and /.well-known/agent.json 404 on both hosts
+- id: openapi
+  spec: OpenAPI 3.x
+  conforms: false
+  evidence: no OpenAPI at any probed path on brand.ai or app.brand.ai; /api/openapi.json
+    and /api-docs return 401 Unauthorized
+- id: hsts
+  spec: RFC 6797
+  conforms: true
+  evidence: strict-transport-security max-age=63072000; includeSubDomains on app.brand.ai
+compliance_program:
+  published: true
+  source: https://brand.ai/security/
+  certifications: [SOC 2 Type II, GDPR, CCPA]
+  trust_center: https://trust.brand.ai/
+summary:
+  asserted: 16
+  conforming: 10
+  non_conforming: 6

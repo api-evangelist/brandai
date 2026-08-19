@@ -1,0 +1,72 @@
+generated: '2026-08-13'
+method: probed
+source: live probes of app.brand.ai + https://app.brand.ai/.well-known/oauth-authorization-server
+note: >-
+  Brand.ai publishes no developer documentation, so nothing here is quoted from a
+  conventions/reference page — every entry is either read from a discovery document
+  the provider serves or observed on a live response. Where a convention could not
+  be established, it is recorded as unknown rather than guessed.
+authentication:
+  style: oauth2-bearer
+  detail: Authorization Code + PKCE (S256) against https://app.brand.ai/api/auth;
+    Bearer token on the MCP endpoint (realm brand-ai-mcp). Open Dynamic Client
+    Registration (RFC 7591).
+  artifact: authentication/brandai-authentication.yml
+idempotency:
+  supported: unknown
+  detail: >-
+    No idempotency key header, parameter or documentation was found. No OpenAPI
+    exists to inspect and the only reachable write surface (MCP tools) is auth-gated,
+    so this is genuinely unestablished — NOT a recorded absence and NOT a recorded
+    presence. No Idempotency pointer is emitted in apis.yml.
+pagination:
+  supported: unknown
+  detail: Not observable without an authenticated call; no docs.
+versioning:
+  scheme: none-published
+  detail: >-
+    The MCP endpoint is unversioned (/api/mcp with no version segment) and the OAuth
+    issuer is unversioned (/api/auth). MCP itself carries protocol version negotiation
+    in the initialize handshake, but Brand.ai publishes no product API version, no
+    version header and no version policy.
+  artifact: lifecycle/brandai-lifecycle.yml
+error_envelope:
+  format: custom
+  shape: '{"error": string, "message"?: string}'
+  problem_json: false
+  artifact: errors/brandai-problem-types.yml
+rate_limit_signaling:
+  headers_observed: []
+  detail: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After header appeared on any observed
+    response, including the 401 from the MCP endpoint. Nothing is documented.
+  artifact: rate-limits/brandai-rate-limits.yml
+request_tracing:
+  headers_observed: [x-vercel-id, cf-ray]
+  detail: >-
+    No first-party request-id header. The only correlation identifiers returned are
+    infrastructure ones from Vercel (x-vercel-id) and Cloudflare (cf-ray), which
+    Brand.ai does not document and does not commit to.
+transport_security:
+  hsts: true
+  hsts_max_age: 63072000
+  include_subdomains: true
+  csp: true
+  csp_report_only_default_src: "'self'"
+  headers_observed: [strict-transport-security, content-security-policy, content-security-policy-report-only,
+    x-content-type-options, referrer-policy, report-to]
+  detail: >-
+    app.brand.ai sends a two-year HSTS with includeSubDomains, x-content-type-options
+    nosniff, referrer-policy strict-origin-when-cross-origin, and a full CSP in
+    report-only mode reporting to Sentry. The enforced CSP is only
+    upgrade-insecure-requests.
+metadata_and_expansion:
+  supported: unknown
+infrastructure:
+  hosting: Vercel (app.brand.ai, status.brand.ai) behind Cloudflare
+  identity: Clerk
+  app_framework: Next.js
+  marketing_framework: Nuxt
+  detail: >-
+    Read from response headers (x-vercel-id, "server: cloudflare",
+    x-clerk-auth-status) and asset paths (/_next/, /_nuxt/).

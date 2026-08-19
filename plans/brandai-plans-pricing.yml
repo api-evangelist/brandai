@@ -1,0 +1,56 @@
+generated: '2026-08-13'
+method: searched
+source: https://brand.ai/faq/
+plan_count: 0
+plans: []
+note: >-
+  Brand.ai publishes NO pricing page and NO named plan tiers. The sitemap
+  (https://brand.ai/sitemap.xml, 200) lists every public page and contains no
+  /pricing or /plans URL. The FAQ is the only place pricing is addressed and it
+  describes the model without naming a tier or a number: "Tiered pricing is designed
+  to scale with your organization's needs. It's based on the number of team members
+  accessing the platform, differing levels of capabilities, and the volume of
+  generation and analysis needed." There is no self-serve sign-up — access is via
+  "Book a demo" or an Early Access Program waitlist for "qualified organizations",
+  with a stated two-business-day response. Nothing here is inferred; a zero plan
+  count is the accurate measurement.
+pricing_model:
+  published_tiers: false
+  self_serve_signup: false
+  free_trial: false
+  trial_note: 'FAQ: "We offer qualified prospects the opportunity to experience Brand.ai
+    through product demonstrations and pilot programs. Contact our team to discuss
+    trial options."'
+  gate: demo-request + early-access waitlist
+  gate_url: https://brand.ai/book-a-demo/
+  stated_dimensions:
+  - number of team members accessing the platform
+  - level of capabilities
+  - volume of generation and analysis
+soft_200_warning: >-
+  https://brand.ai/pricing/ returns HTTP 200 and MUST NOT be credited as a pricing
+  page. It is a registered Nuxt route that renders the HOMEPAGE verbatim — same
+  <title> ("brand.ai | AI for brand management"), same hero ("Your brand, as source
+  code"), no tier, no price, no currency. It is absent from the sitemap. An
+  unregistered path (https://brand.ai/zzz-nonexistent-kin-test/) correctly returns
+  404 on the same host, so the 200 is a real route serving the wrong content rather
+  than a blanket SPA catch-all. Status alone is not evidence; the body was read.
+x-evidence:
+- url: https://brand.ai/pricing/
+  status: 200
+  fetched: '2026-08-13'
+  note: soft-200 — serves the homepage, no pricing content; NOT credited
+- url: https://brand.ai/zzz-nonexistent-kin-test/
+  status: 404
+  fetched: '2026-08-13'
+  note: control probe proving brand.ai returns real 404s
+- url: https://brand.ai/faq/
+  status: 200
+  fetched: '2026-08-13'
+- url: https://brand.ai/sitemap.xml
+  status: 200
+  fetched: '2026-08-13'
+  note: 36 URLs, none of them a pricing page
+- url: https://brand.ai/book-a-demo/
+  status: 200
+  fetched: '2026-08-13'

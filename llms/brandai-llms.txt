@@ -1,25 +1,40 @@
 # Brand.ai
 
-> Brand.ai (Access to Tools Inc.) is a San Francisco AI platform for brand management that turns brand assets into machine-readable intelligence, so people and AI agents can keep brand consistency across tools and workflows. Founded 2024, backed by Uncork Capital. It is a demo-gated SaaS product — no public API, SDK, or developer portal at this time.
+> Brand.ai (Access to Tools Inc.) is a San Francisco AI platform that turns a company's brand into machine-readable infrastructure — "your brand, as source code" — so that people and AI agents share one enforced brand context. Brand OS structures the brand (Brand Foundation, Brand Ontology, Daily Signals, Connected Applications); Brand Studio executes on it (Assistant, Canvas, Projects, Brand Check). Founded 2024, backed by Uncork Capital. The product is demo-gated with no self-serve sign-up, and there is no public developer portal, OpenAPI, or SDK. There IS, however, a real hosted remote MCP server — see below.
+
+## Agent surface
+- [MCP server](https://app.brand.ai/api/mcp): Hosted, remote, Streamable HTTP. OAuth-gated — an unauthenticated `tools/list` returns 401 `McpSessionTokenMissingException` with `WWW-Authenticate: Bearer realm="brand-ai-mcp"`. The live tool list is not public.
+- [OAuth 2.0 Authorization Server Metadata](https://app.brand.ai/.well-known/oauth-authorization-server) (RFC 8414): issuer `https://app.brand.ai/api/auth`; authorization_code + PKCE (S256); open Dynamic Client Registration (RFC 7591) at `/api/auth/oauth2/register`; introspection and revocation published; ID tokens signed EdDSA.
+- [OpenID Connect Discovery](https://app.brand.ai/.well-known/openid-configuration)
+- Scopes: `mcp:identify`, `brands:read`, `brand_rules:read`, `brand_checks:read`, `brand_checks:write`, `artifacts:read`, `artifacts:write`, `projects:write`, `help:read`, plus `openid` / `profile` / `email` / `offline_access`.
+- Not served: RFC 9728 protected-resource metadata (404), `/.well-known/agent-card.json` (404), `/.well-known/security.txt` (404), any OpenAPI (401/404).
 
 ## Products
-- [Brand OS](https://brand.ai/brand-os/): Structures brand data (Brand Foundation, Brand Ontology, Daily Signals, connected apps) into machine-readable format.
-- [Brand Studio](https://brand.ai/brand-studio/): Asset creation, visual strategy Canvas, project management, and Brand Check validation.
+- [Brand OS](https://brand.ai/brand-os/): Four intelligence layers — Brand Foundation (guidelines to machine-readable rules), Brand Ontology (150+ perception dimensions), Daily Signals (newsroom), Connected Applications (OAuth integrations with Figma, Notion, Google Drive, Slack, Shopify).
+- [Brand Studio](https://brand.ai/brand-studio/): Assistant (built on Claude, governed by your standards), Canvas (visual strategy sandbox), Projects, Brand Check (pre-launch brand/cultural/regulatory risk scoring with audit trails).
 
 ## Company
 - [Homepage](https://brand.ai)
+- [Product overview](https://brand.ai/product/)
+- [Enterprise](https://brand.ai/enterprise/)
+- [FAQ](https://brand.ai/faq/)
+- [Company](https://brand.ai/company/)
+- [Careers](https://brand.ai/careers/)
 - [Blog](https://brand.ai/blog/)
-- [Book a demo](https://brand.ai/book-a-demo/)
+- [Book a demo](https://brand.ai/book-a-demo/) — the only access path; no self-serve sign-up, and pricing is unpublished (tiered by seats, capability level, and generation/analysis volume).
 - [Status page](https://status.brand.ai/)
 
 ## Security & Trust
-- [Security](https://brand.ai/security/): SOC 2 Type II, GDPR, CCPA; TLS 1.3 in transit, AES-256 at rest; no AI training on customer data.
-- [Trust Center](https://trust.brand.ai/): Vanta-hosted trust portal.
+- [Security](https://brand.ai/security/): SOC 2 Type II, GDPR, CCPA; TLS 1.3 in transit, AES-256 at rest; semi-annual assume-breach pen testing; BYOK option; no AI training on customer data.
+- [Trust Center](https://trust.brand.ai/): Vanta-hosted.
 
 ## Legal
 - [Privacy Policy](https://brand.ai/legal/privacy/)
 - [Terms](https://brand.ai/legal/terms/)
 - [Acceptable Use Policy](https://brand.ai/legal/acceptable-use-policy/)
+
+## Note on name collision
+The npm packages `brandai-cli`, `brandai-storybook`, `brandai-docs-plugin`, `brandai-tools` and the GitHub organisation `github.com/brandai` belong to a DIFFERENT, defunct Brand.ai — a 2015-2017 design-system documentation product, archived 2024-07-23. They are not Access to Tools Inc. software.
 
 ## API Evangelist profile
 - [apis.yml](https://raw.githubusercontent.com/api-evangelist/brandai/refs/heads/main/apis.yml)

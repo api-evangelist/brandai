@@ -1,0 +1,60 @@
+generated: '2026-08-13'
+method: searched
+source: registry.npmjs.org, pypi.org, github.com
+package_count: 0
+packages: []
+note: >-
+  Brand.ai (Access to Tools Inc., founded 2024) publishes NO first-party client
+  libraries. npm, PyPI and the GitHub organisations were all searched and nothing
+  attributable to this company was found. Its only machine surface is an OAuth-gated
+  remote MCP server, which an MCP client reaches over HTTP with no vendor package
+  required.
+namespace_collision_warning: >-
+  A NAME COLLISION EXISTS AND MUST NOT BE MISREAD AS THIS COMPANY'S SDKs. The npm
+  packages brandai-cli, brandai-storybook, brandai-docs-plugin, brandai-tools,
+  brandai-language and starterkit-mustache-brandai, and the GitHub organisation
+  github.com/brandai, belong to a DIFFERENT and now-defunct Brand.ai — a 2015-2017
+  design-system documentation product ("sync your style assets on Brand.ai with your
+  working environment"). Every one of those packages last published in 2015-2017 and
+  the GitHub organisation was ARCHIVED on 2024-07-23 as "no longer maintained", which
+  is the same year the current Brand.ai was founded. They are not first-party to
+  Access to Tools Inc. and are deliberately excluded.
+rejected:
+- name: brandai-cli
+  registry: npm
+  version: 1.0.5
+  published: '2017-04-27'
+  official: false
+  reason: belongs to the archived 2016-17 Brand.ai design-system product, not Access
+    to Tools Inc.
+- name: brandai-storybook
+  registry: npm
+  version: 1.0.2
+  published: '2017-07-26'
+  official: false
+  reason: same archived design-system product
+- name: brandai-docs-plugin
+  registry: npm
+  version: 1.0.2
+  published: '2016-07-05'
+  official: false
+  reason: same archived design-system product
+- name: brandai-tools
+  registry: npm
+  version: 0.0.8
+  published: '2015-10-05'
+  official: false
+  reason: same archived design-system product
+probed_absent:
+- {registry: npm, name: '@brandai/sdk', status: 404}
+- {registry: npm, name: '@brand-ai/sdk', status: 404}
+- {registry: npm, name: '@brandai/mcp', status: 404}
+- {registry: npm, name: '@brand-ai/mcp', status: 404}
+- {registry: npm, name: brand-ai-mcp, status: 404}
+- {registry: npm, name: brand-ai, status: 404}
+- {registry: pypi, name: brandai, status: 404}
+- {registry: pypi, name: brand-ai, status: 404}
+- {registry: github, name: orgs/brand-ai, status: 404}
+x-evidence:
+  fetched: '2026-08-13'
+  searched_registries: [npm, pypi, github]

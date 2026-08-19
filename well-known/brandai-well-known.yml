@@ -1,0 +1,65 @@
+generated: '2026-08-13'
+method: probed
+source: live GET of /.well-known/* on brand.ai and app.brand.ai
+note: >-
+  The marketing host brand.ai serves nothing at /.well-known/ — every path returns
+  the Nuxt 404 page. The APPLICATION host app.brand.ai is where Brand.ai's machine
+  surface lives: it serves a real RFC 8414 OAuth 2.0 Authorization Server Metadata
+  document and an identical OpenID Connect Discovery document, both advertising
+  MCP-specific scopes (mcp:identify, brands:read, brand_rules:read, brand_checks:*,
+  artifacts:*, projects:write, help:read). This is the discovery surface for the
+  OAuth-gated remote MCP server at https://app.brand.ai/api/mcp. RFC 9728 OAuth
+  Protected Resource Metadata is NOT served (404 at both the root and the
+  resource-specific /.well-known/oauth-protected-resource/api/mcp path), so an MCP
+  client cannot discover the authorization server from the 401 challenge alone —
+  the WWW-Authenticate header is a bare `Bearer realm="brand-ai-mcp"` with no
+  resource_metadata parameter.
+hosts:
+- host: https://app.brand.ai
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    file: brandai-oauth-authorization-server.json
+    spec: RFC 8414
+  - path: /.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+    file: brandai-openid-configuration.json
+    spec: OpenID Connect Discovery 1.0
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+    spec: RFC 9728
+  - path: /.well-known/oauth-protected-resource/api/mcp
+    status: 404
+    spec: RFC 9728 (resource-specific)
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://brand.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+x-evidence:
+  fetched: '2026-08-13'
+  hits: 2
+  misses: 14

@@ -1,0 +1,70 @@
+generated: '2026-08-13'
+method: probed
+status: published
+source: https://app.brand.ai/api/mcp
+note: >-
+  Brand.ai operates a REAL, hosted, remote MCP server at https://app.brand.ai/api/mcp.
+  An unauthenticated JSON-RPC tools/list POST returns HTTP 401 with
+  {"error":"McpSessionTokenMissingException","message":"MCP session token is required"}
+  and WWW-Authenticate: Bearer realm="brand-ai-mcp" — so the endpoint exists and is
+  OAuth-gated rather than absent. The authorization server at
+  https://app.brand.ai/api/auth publishes RFC 8414 metadata advertising an
+  `mcp:identify` scope alongside the Brand OS resource scopes, which is what
+  establishes that this MCP server is a first-class product surface and not an
+  internal route. The live tool set (names + inputSchema) requires an authenticated
+  tools/list call, so NO tool list is recorded here — Brand.ai publishes no llms.txt
+  and no developer documentation from which one could be read, and inventing tool
+  names would fabricate the provider's agent surface.
+server:
+  name: brand-ai-mcp
+  transport: http
+  url: https://app.brand.ai/api/mcp
+  realm: brand-ai-mcp
+  auth: oauth2
+deployment:
+  mode: remote
+  endpoint: https://app.brand.ai/api/mcp
+  auth: oauth
+  verified: probed
+authorization:
+  issuer: https://app.brand.ai/api/auth
+  metadata: https://app.brand.ai/.well-known/oauth-authorization-server
+  dynamic_client_registration: https://app.brand.ai/api/auth/oauth2/register
+  authorization_endpoint: https://app.brand.ai/api/auth/oauth2/authorize
+  token_endpoint: https://app.brand.ai/api/auth/oauth2/token
+  pkce: S256
+  grant_types: [authorization_code, refresh_token]
+  scopes: [mcp:identify, brands:read, brand_rules:read, brand_checks:read,
+    brand_checks:write, artifacts:read, artifacts:write, projects:write, help:read,
+    openid, profile, email, offline_access]
+  protected_resource_metadata: null
+tools: []
+tools_note: >-
+  Auth-gated. tools/list returned 401 without a bearer token. Brand.ai publishes no
+  llms.txt, no OpenAPI, and no public developer documentation, so there is no
+  second source from which the tool names could be honestly read. The scope list is
+  the best available proxy for the server's capability shape: brands, brand_rules,
+  brand_checks, artifacts, projects and help.
+gaps:
+- id: no-oauth-protected-resource-metadata
+  detail: >-
+    RFC 9728 /.well-known/oauth-protected-resource returns 404 at both the host root
+    and the resource-specific /api/mcp path, and the 401 WWW-Authenticate header
+    carries no resource_metadata parameter. A spec-compliant MCP client cannot
+    discover the authorization server from the challenge; it must be told the issuer
+    out of band.
+- id: no-public-mcp-documentation
+  detail: >-
+    No docs.brand.ai, developers.brand.ai or brand.ai/mcp page exists (all NXDOMAIN
+    or 404), and the marketing sitemap lists no developer page. The MCP server is
+    discoverable only by probing the application host.
+x-evidence:
+- url: https://app.brand.ai/api/mcp
+  method: POST tools/list
+  http_status: 401
+  body: '{"error":"McpSessionTokenMissingException","message":"MCP session token is required"}'
+  www_authenticate: Bearer realm="brand-ai-mcp"
+  fetched: '2026-08-13'
+- url: https://app.brand.ai/.well-known/oauth-authorization-server
+  http_status: 200
+  fetched: '2026-08-13'

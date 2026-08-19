@@ -1,7 +1,8 @@
-generated: '2026-07-18'
+generated: '2026-08-13'
 method: searched
 probe: true
 source: https://brand.ai/security/
+url: https://brand.ai/security/
 trust_center: https://trust.brand.ai/
 trust_center_platform: Vanta
 security_page: https://brand.ai/security/
@@ -28,3 +29,10 @@ evidence:
   keywords:
   - vanta trust center
   - trust security compliance
+note: >-
+  Re-confirmed by probe on 2026-08-13 (the automated probe reads "SOC 2" and "GDPR"
+  from brand.ai/security; the fuller "SOC 2 Type II" / CCPA reading and the control
+  list are retained from the richer 2026-07-18 searched pass and were not downgraded).
+  Brand.ai publishes a compliance posture but NOT a vulnerability disclosure policy —
+  /.well-known/security.txt returns 404 on both brand.ai and app.brand.ai, and no
+  responsible-disclosure or bug-bounty page was found.

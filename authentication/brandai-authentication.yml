@@ -1,0 +1,85 @@
+generated: '2026-08-13'
+method: probed
+source: https://app.brand.ai/.well-known/oauth-authorization-server
+docs: null
+note: >-
+  Brand.ai publishes no OpenAPI and no developer authentication page, so this profile
+  is built from the provider's own live OAuth 2.0 / OpenID Connect discovery documents
+  on the application host, plus the observed WWW-Authenticate challenge from the MCP
+  endpoint. The identity layer is Clerk (the 401 carries x-clerk-auth-status and
+  x-clerk-auth-reason headers, and the app CSP allow-lists clerk.brand.ai).
+summary:
+  types: [oauth2, openIdConnect]
+  api_key_in: []
+  oauth2_flows: [authorizationCode]
+  bearer: true
+  dynamic_client_registration: true
+  pkce_required_methods: [S256]
+  identity_provider: Clerk
+schemes:
+- name: OAuth2
+  type: oauth2
+  sources: [https://app.brand.ai/.well-known/oauth-authorization-server]
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://app.brand.ai/api/auth/oauth2/authorize
+    tokenUrl: https://app.brand.ai/api/auth/oauth2/token
+    scope_count: 13
+  token_endpoint_auth_methods: [none, client_secret_basic, client_secret_post]
+  grant_types: [authorization_code, refresh_token]
+  code_challenge_methods: [S256]
+- name: OpenIDConnect
+  type: openIdConnect
+  sources: [https://app.brand.ai/.well-known/openid-configuration]
+  openIdConnectUrl: https://app.brand.ai/.well-known/openid-configuration
+  issuer: https://app.brand.ai/api/auth
+  userinfo_endpoint: https://app.brand.ai/api/auth/oauth2/userinfo
+  end_session_endpoint: https://app.brand.ai/api/auth/oauth2/end-session
+  jwks_uri: https://app.brand.ai/api/auth/jwks
+  id_token_signing_alg_values_supported: [EdDSA]
+  subject_types_supported: [public]
+  acr_values_supported: [urn:mace:incommon:iap:bronze]
+  prompt_values_supported: [login, consent, create, select_account, none]
+  claims_supported: [sub, iss, aud, exp, iat, sid, scope, azp, email, email_verified,
+    name, picture, family_name, given_name]
+- name: BearerToken
+  type: http
+  scheme: bearer
+  sources: [https://app.brand.ai/api/mcp]
+  realm: brand-ai-mcp
+  observed_challenge: 'WWW-Authenticate: Bearer realm="brand-ai-mcp"'
+endpoints:
+  authorization: https://app.brand.ai/api/auth/oauth2/authorize
+  token: https://app.brand.ai/api/auth/oauth2/token
+  registration: https://app.brand.ai/api/auth/oauth2/register
+  introspection: https://app.brand.ai/api/auth/oauth2/introspect
+  revocation: https://app.brand.ai/api/auth/oauth2/revoke
+  userinfo: https://app.brand.ai/api/auth/oauth2/userinfo
+  jwks: https://app.brand.ai/api/auth/jwks
+  end_session: https://app.brand.ai/api/auth/oauth2/end-session
+posture:
+  strengths:
+  - Open Dynamic Client Registration (RFC 7591) — an MCP client can self-register
+    with no human onboarding step, which is what makes the server agent-reachable.
+  - PKCE S256 is the only code challenge method offered.
+  - EdDSA (Ed25519) ID token signing, ahead of the RS256 default.
+  - Token introspection (RFC 7662) and revocation (RFC 7009) both published.
+  - authorization_response_iss_parameter_supported (RFC 9207) — mix-up defence.
+  weaknesses:
+  - No RFC 9728 protected-resource metadata, and the 401 challenge omits the
+    resource_metadata parameter, so the AS is not discoverable from the resource.
+  - token_endpoint_auth_methods_supported includes "none" (public clients).
+  - No documentation of any of this on a developer-facing page.
+x-evidence:
+- url: https://app.brand.ai/.well-known/oauth-authorization-server
+  http_status: 200
+  fetched: '2026-08-13'
+- url: https://app.brand.ai/.well-known/openid-configuration
+  http_status: 200
+  fetched: '2026-08-13'
+- url: https://app.brand.ai/api/auth/jwks
+  http_status: 200
+  fetched: '2026-08-13'
+- url: https://app.brand.ai/api/mcp
+  http_status: 401
+  fetched: '2026-08-13'
