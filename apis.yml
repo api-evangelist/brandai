@@ -45,6 +45,18 @@ tags:
 - Brand Management
 - Artificial Intelligence
 - Marketing
+- Software-as-a-Service
+- Brand Operating System
+- AI Agents
+- Design
+- MCP
+- Brand Governance
+- Brand Intelligence
+tags_raw:
+- Company
+- Brand Management
+- Artificial Intelligence
+- Marketing
 - SaaS
 - Brand Operating System
 - AI Agents
@@ -67,6 +79,10 @@ apis:
   humanURL: https://app.brand.ai
   baseURL: https://app.brand.ai/api/mcp
   tags:
+  - MCP
+  - AI Agents
+  - Brand Management
+  tags_raw:
   - Model Context Protocol
   - AI Agents
   - Brand Management
